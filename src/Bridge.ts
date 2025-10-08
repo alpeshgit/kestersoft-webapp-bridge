@@ -66,8 +66,6 @@ class Bridge {
             }
         } else {
 
-            // TODO: Remove
-            console.log("APP SEND",eventName,this.#origin)
             this.#otherWindow?.postMessage({
                 eventName, eventPayload
             },this.#origin)
@@ -76,8 +74,6 @@ class Bridge {
     }
 
     async processMessage(messageEvent) {
-
-        console.log("APP RECV",messageEvent.data)
 
         const { eventName, eventPayload, eventId } = messageEvent.data
 

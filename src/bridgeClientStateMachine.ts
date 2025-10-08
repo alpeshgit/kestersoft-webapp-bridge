@@ -1,3 +1,5 @@
+import pkg from "../package.json" assert { type: "json" };
+
 export enum State {
   Disconnected = 1,
   Hey,
@@ -27,8 +29,8 @@ export default {
       from: State.Disconnected, event: Action.HEY, to: State.Hey,
       action: function (transition, payload) {
         this.sendMessage(Action.HEY, {
-          clientType: this.clientType
-          // TODO: Add version info
+          clientType: this.clientType,
+          verion: pkg.version
         })
       }
     },
