@@ -35,6 +35,12 @@ export default class Entity {
             argument: recordData
         }) : null
 
+        this.bulkCreateApi = this.canCreate_s ? (recordsData) => ApiClient({
+            entity: this.name,
+            operation: "bulkCreateApi",
+            argument: recordsData
+        }) : null
+
         // TODO: support adhoc query 
         this.updateApi = this.canUpdate_s ? (recordData) => ApiClient({
             entity: this.name,
