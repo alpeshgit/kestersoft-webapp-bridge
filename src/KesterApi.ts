@@ -46,4 +46,13 @@ export default class KesterApi {
         // TODO: use dynamic entities
         return this.#profile.entities_s
     }
+
+
+    executeFlow(flowName,options){
+        return getApiClient({
+            operation: "executeFlow",
+            argument: flowName,
+            options: options
+        })
+    }
 }
