@@ -9,7 +9,7 @@ export default class KesterApi {
         if (!bridge) {
             throw new Error("bridge is undefined or null")
         }
-        setApiClient((payload, options) => bridge.stateTransition(Action.APIREQUEST, payload, options))
+        setApiClient((payload, options=true) => bridge.stateTransition(Action.APIREQUEST, payload, options))
 
         if (profile) {
             this.init(profile)

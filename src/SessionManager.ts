@@ -25,7 +25,7 @@ export default class SessionManager {
             if(eventPayload.resolve){
                 promise.resolve(eventPayload.resolve)
             } else {
-                promise.reject(eventPayload.reject ? new Error(eventPayload.message,{
+                promise.reject(eventPayload.reject ? new Error(eventPayload.message || "Error",{
                     cause: eventPayload.reject
                 }) : new Error("Error processing session response"))
             }
