@@ -102,6 +102,7 @@ class Bridge {
                     }
                 } catch (error) {
                     resultPayload = {
+                        message: error?.message,
                         reject: error
                     }
                 }
