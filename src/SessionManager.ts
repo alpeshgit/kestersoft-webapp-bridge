@@ -9,10 +9,12 @@ export default class SessionManager {
     start(sessionId, timeout=this.#timeout){
         const promise = new Promise((resolve, reject)=>{
             this.#sessions.set(sessionId,{resolve,reject})
-            setTimeout(()=>{
-                this.#sessions.delete(sessionId)
-                reject(null)
-            },timeout)
+            if(timeout !== null){
+                setTimeout(()=>{
+                    this.#sessions.delete(sessionId)
+                    reject(null)
+                },timeout)
+            }
         })
         return promise
     }

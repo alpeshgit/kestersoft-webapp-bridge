@@ -2,6 +2,8 @@ import SessionManager from "./SessionManager"
 import StateMachine from "./StateMachine"
 import bridgeClientStateMachine, { Action, ClientType } from "./bridgeClientStateMachine"
 
+const trackableEvent = [Action.APIREQUEST,Action.CUSTOMEVENT]
+
 class Bridge {
     static #stateMachine = new StateMachine(bridgeClientStateMachine)
     #otherWindow
@@ -57,8 +59,9 @@ class Bridge {
                 },this.#origin)
                 return Promise.resolve(eventPayload)
             } else {
+                let sessionOptions = typeof trackSession === "boolean" ? {} : trackSession
                 trackSession = crypto.randomUUID()
-                const promise = this.#sessionManager.start(trackSession)
+                const promise = this.#sessionManager.start(trackSession,sessionOptions.timeout)
                 this.#otherWindow?.postMessage({
                     eventName, eventPayload, eventId: trackSession
                 },this.#origin)
@@ -90,7 +93,7 @@ class Bridge {
         }
 
         if(eventId){
-            if(eventName === Action.APIREQUEST){
+            if(trackableEvent.includes(eventName)){
                 let resultPayload
                 try {
                     const executionResult = await Bridge.#stateMachine.execute(eventName,eventPayload,this.#context)
@@ -109,12 +112,12 @@ class Bridge {
 
             return eventPayload
         } else {
-            return Bridge.#stateMachine.execute(eventName,eventPayload,this.#context)
+        return Bridge.#stateMachine.execute(eventName,eventPayload,this.#context)
         }
     }
 
-    async stateTransition(eventName,eventPayload={}){
-        return Bridge.#stateMachine.execute(eventName,eventPayload,this.#context)
+    async stateTransition(eventName,eventPayload={},options){
+        return Bridge.#stateMachine.execute(eventName,eventPayload,this.#context,options)
     }
 }
 

@@ -43,10 +43,10 @@ const useShellBridge = (handler, targetOrigin, clientType) => {
   return {
     // TODO: Refactor service layer
     kesterApi,
-    customEvent: async (eventName, eventPayload) => {
+    customEvent: async (eventName, eventPayload, options) => {
       return shellBridge.stateTransition(Action.CUSTOMEVENT, {
         eventName, eventPayload
-      })
+      }, options)
     },
   }
 }
@@ -97,10 +97,10 @@ export const KesterApp = ({ handler, targetOrigin, clientType, children }) => {
     value: {
     // TODO: Refactor service layer
     kesterApi,
-    customEvent: async (eventName, eventPayload) => {
+    customEvent: async (eventName, eventPayload, options) => {
       return shellBridge.stateTransition(Action.CUSTOMEVENT, {
         eventName, eventPayload
-      })
+      }, options)
     },
   }
   }, children)

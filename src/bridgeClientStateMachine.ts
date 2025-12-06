@@ -44,8 +44,8 @@ export default {
     },
     {
       from: State.Connected, event: Action.APIREQUEST, to: State.Connected,
-      action: function (transition, payload) {
-        return this.sendMessage(Action.APIREQUEST, payload, true)
+      action: function (transition, payload, options) {
+        return this.sendMessage(Action.APIREQUEST, payload, options)
       }
     },
     {
@@ -53,10 +53,10 @@ export default {
     },
     {
       from: State.Connected, event: Action.CUSTOMEVENT, to: State.Connected,
-      action: function (transition, payload) {
+      action: function (transition, payload, options) {
         return this.sendMessage(Action.CUSTOMEVENT, {
           eventName: payload.eventName, eventPayload: payload.eventPayload
-        })
+        }, options)
       }
     },
     {

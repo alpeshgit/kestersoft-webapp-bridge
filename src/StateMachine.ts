@@ -6,7 +6,7 @@ export default class StateMachine {
     this.#transitions = config.transitions
   }
 
-  async execute(event,payload,context) {
+  async execute(event,payload,context,options) {
     const transition = this.#transitions.find(
       t => t.from === context.state && t.event === event
     )
@@ -14,7 +14,7 @@ export default class StateMachine {
 
     if (transition.action) {
       try {
-        const actionResult = await transition.action.call(context,transition,payload)
+        const actionResult = await transition.action.call(context,transition,payload,options)
         if(context.state === transition.from){
           context.state = transition.to
         } else {
